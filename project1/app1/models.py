@@ -57,5 +57,9 @@ class attendance(models.Model):
     course_id = models.ForeignKey(course, on_delete=CASCADE)
     session_id = models.ForeignKey(session, on_delete=CASCADE)
     attendance = models.BooleanField()
+    date = models.DateField()
+    marked_by = models.CharField(max_length=100)
+    
+
 
     

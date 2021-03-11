@@ -6,7 +6,8 @@ import django.views.decorators.csrf
 urlpatterns = [
     path('login/', views.login),
     path('authenticate/', views.authenticate),
+    path('attendance/<int:session_id>/<int:course_id>/', views.get_attendance),
     #path('sign-up/', views.sign_up),
-    #path('student-home/', views.student_view),
-    #path('profile/<str:role>/<int:id>/', views.profile),
+    path('sessions/', views.sessions),
+    path('profile/', views.profile),
 ]

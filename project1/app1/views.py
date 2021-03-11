@@ -1,10 +1,10 @@
 import json
+import math
+from json.decoder import JSONDecodeError, JSONDecoder
 import jwt
 from django.shortcuts import render
-from rest_framework import views
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
-from rest_framework.views import APIView
 from rest_framework import status, exceptions, HTTP_HEADER_ENCODING
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.authentication import get_authorization_header
@@ -32,27 +32,29 @@ def login(request):
             user = User.objects.get(username=username)
             #check_password
         except User.DoesNotExist:
+            print ("111111111111111")
             return Response({'Error': "Invalid username/password"}, status="400")
-        if user and user.check_password(password):
+        if user and user.password == password or user.check_password(password):
             
             payload = {
                 'id': user.id,
                 'email': user.email,
             }
-            jwt_token = {'token': jwt.encode(payload, "SECRET_KEY", "HS256")}
-
+            jwt_token = {"token": jwt.encode(payload, "SECRET_KEY")}
+            print (jwt_token)
+            print ("222222222222")
             return Response(
-              json.dumps(jwt_token),
+              jwt_token,
               status=200,
               content_type="application/json"
             )
         else:
-            return Response(
+            print ("3333333333333333")
+            return HttpResponse(
               json.dumps({'Error': "Invalid credentials"}),
               status=400,
               content_type="application/json"
             )
-
 
 
 @csrf_exempt
@@ -60,8 +62,11 @@ def authenticate(request):
     print ("in authenticate function ....")
     auth = get_authorization_header(request).split()
     print ("AUTH = ", auth)
+    print (auth[0].lower())
+    print (type(auth[0].lower()))
+    msg = "invalid token format sent"
     if not auth or auth[0].lower() != b'token':
-        return None
+        raise exceptions.AuthenticationFailed(msg)
     if len(auth) == 1:
         msg = 'Invalid token header. No credentials provided.'
         print ("MSG = ", msg)
@@ -114,7 +119,88 @@ def authenticate_credentials(token):
             )
 
 
+@csrf_exempt
+def profile(request):
+    token = get_authorization_header(request).split()[1]
+    payload = jwt.decode(token, "SECRET_KEY", "HS256")
+    email = payload['email']
+    userid = payload['id']
+    print ("user id = ", userid)
+    try:
+        user_obj = User.objects.get(pk = int(userid))
+        profile_obj = user_profile.objects.get(pk = userid)#.values('address', 'User__username')
+        d_name = department.objects.get(pk = profile_obj.dept_id_id).dept_name
+        print ("user_obj = ", user_obj)
+        print ("profile_obj = ", profile_obj)
+    except:
+        return HttpResponse({'Error': "Data can't be fetched, Internal server error"}, status="500")
+    return_josn = {"name": user_obj.first_name + user_obj.last_name, "email": user_obj.email, "dept_name": d_name, "phone_no": profile_obj.phone_no, "address": profile_obj.address}
+    print ("return json = ", return_josn)
+    return JsonResponse(return_josn, status = 200, content_type = "application/json", safe=False)
 
+
+@csrf_exempt
+def sessions(request):
+    token = get_authorization_header(request).split()[1]
+    payload = jwt.decode(token, "SECRET_KEY", "HS256")
+    userid = payload['id']
+    print ("user id = ", userid)
+    return_json = {}
+    index = 1
+    print ("****** = ", User.objects.get(pk = userid).is_staff)
+    if User.objects.get(pk = userid).is_staff is not True:
+        course_enrolled_obj = course_enrolled.objects.filter(student_id = userid)
+        for _i in course_enrolled_obj:
+            course_obj = course.objects.get(pk = _i.course_id_id)
+            session_obj = session.objects.get(pk = _i.session_id_id)
+            obj = {"course_string": course_obj.course_string,"session_name": session_obj.session_name , "course_name": course_obj.course_name, "term": _i.term, "year": _i.year}
+            print ("josn obj = ", obj)
+            return_json.update({index: obj})
+            index += 1
+
+    else:
+        session_obj = session.objects.filter(faculty_id = userid)
+        for _i in session_obj:
+            course_obj = course.objects.get(pk = _i.course_id_id)
+            obj = {"course_string": course_obj.course_string, "session_name": _i.session_name, "course_name": course_obj.course_name, "term": course_obj.term, "year": course_obj.year}
+            print ("josn obj = ", obj)
+            return_json.update({index : obj})
+            index += 1
+
+        return JsonResponse(return_json, status = 200, content_type = "application/json", safe=False)
+
+def get_attendance(request, session_id, course_id):
+    print ("session id = ",session_id)
+    print ("course id = ", course_id)
+    token = get_authorization_header(request).split()[1]
+    payload = jwt.decode(token, "SECRET_KEY", "HS256")
+    userid = payload['id']
+    print ("user id = ", userid)
+    return_json = {}
+    return_json['attendance_data'] = []
+    index = 0
+    attended = 0
+    attendance_obj = attendance.objects.filter(pk = userid)
+    print ("11111111")
+    for _i in attendance_obj:
+        if _i.attendance == True:
+            attended += 1
+        print ("year = ", _i.date.year)
+        print ("month = ", _i.date.month)
+        print ("day = ", _i.date.day)
+        year = _i.date.year
+        month = _i.date.month
+        day = _i.date.day
+        obj = {"date": str(month)+"/"+str(day)+"/"+str(year), "attended": _i.attendance}
+        print ("obj = ", obj)
+        return_json['attendance_data'].append(obj)
+        index += 1
+    print ("22222222")
+    return_json["all_sessions"] = index
+    return_json["attended"] = attended
+    return_json["percentage"] = str(math.ceil((attended/index))*100)+"%"
+
+    return JsonResponse(return_json, status = 200, content_type = "application/json", safe=False)
 
 """
 @csrf_exempt

@@ -1,0 +1,26 @@
+[
+  {
+    "model": "app1.course_enrolled",
+    "pk": 1,
+    "fields": {
+      "session_id": 1,
+      "course_id": 2,
+      "student_id": 1,
+      "dept_id": 4,
+      "term": "Spring",
+      "year": 2021
+    }
+  },
+  {
+    "model": "app1.course_enrolled",
+    "pk": 2,
+    "fields": {
+      "session_id": 4,
+      "course_id": 1,
+      "student_id": 1,
+      "dept_id": 4,
+      "term": "Spring",
+      "year": 2021
+    }
+  }
+]
