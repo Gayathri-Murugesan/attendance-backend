@@ -14,7 +14,7 @@ python .\manage.py migrate
 ```
 
 ### Fixtures
-Run the following command to add intial - starter data
+Run the following command to add initial - starter data
 ```
 python manage.py loaddata ./fixtures/department_data.json ./fixtures/class_room_data.json ./fixtures/user_data.json ./fixtures/user_profile_data.json ./fixtures/course_data.json ./fixtures/session_data.json ./fixtures/course_enrolled_data.json ./fixtures/attendance_data.json
 ```
@@ -27,7 +27,7 @@ With following cred's
 ```
 username: admin
 email: admin@email.com
-admin1234
+password: admin1234
 ```
 
 ## To run the application
