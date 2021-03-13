@@ -1,0 +1,42 @@
+[
+  {
+    "model": "app.department",
+    "pk": 1,
+    "fields": {
+      "dept_name": "Electrical and Computer Engineering",
+      "institution_name": "NJIT"
+    }
+  },
+  {
+    "model": "app.department",
+    "pk": 2,
+    "fields": {
+      "dept_name": "Power and Energy Systems",
+      "institution_name": "NJIT"
+    }
+  },
+  {
+    "model": "app.department",
+    "pk": 3,
+    "fields": {
+      "dept_name": "Data Science",
+      "institution_name": "NJIT"
+    }
+  },
+  {
+    "model": "app.department",
+    "pk": 4,
+    "fields": {
+      "dept_name": "Computer Science",
+      "institution_name": "NJIT"
+    }
+  },
+  {
+    "model": "app.department",
+    "pk": 5,
+    "fields": {
+      "dept_name": "Civil Engineering",
+      "institution_name": "NJIT"
+    }
+  }
+]

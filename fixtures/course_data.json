@@ -1,0 +1,46 @@
+[
+  {
+    "model": "app.course",
+    "pk": 1,
+    "fields": {
+      "course_string": "CS 675",
+      "course_name": "Software Architecture",
+      "dept_id": 4,
+      "term": "Fall",
+      "year": 2021
+    }
+  },
+  {
+    "model": "app.course",
+    "pk": 2,
+    "fields": {
+      "course_string": "CS 684",
+      "course_name": "Software Testing and Quality Assurance",
+      "dept_id": 4,
+      "term": "Fall",
+      "year": 2021
+    }
+  },
+  {
+    "model": "app.course",
+    "pk": 3,
+    "fields": {
+      "course_string": "CS 602",
+      "course_name": "Java Programming",
+      "dept_id": 4,
+      "term": "Fall",
+      "year": 2021
+    }
+  },
+  {
+    "model": "app.course",
+    "pk": 4,
+    "fields": {
+      "course_string": "ECE 657",
+      "course_name": "Semiconductor Devices",
+      "dept_id": 1,
+      "term": "Fall",
+      "year": 2021
+    }
+  }
+]

@@ -1,0 +1,28 @@
+[
+  {
+    "model": "app.attendance",
+    "pk": 1,
+    "fields": {
+      "user_id": 1,
+      "dept_id": 4,
+      "course_id": 2,
+      "session_id": 1,
+      "attendance": true,
+      "marked_by": "system",
+      "date": "2021-02-21"
+    }
+  },
+  {
+    "model": "app.attendance",
+    "pk": 2,
+    "fields": {
+      "user_id": 1,
+      "dept_id": 4,
+      "course_id": 1,
+      "session_id": 4,
+      "attendance": true,
+      "marked_by": "system",
+      "date": "2021-02-22"
+    }
+  }
+]
