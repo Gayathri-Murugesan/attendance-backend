@@ -3,7 +3,7 @@
     "model": "app.session",
     "pk": 1,
     "fields": {
-      "session_name": "Mon Section",
+      "session_name": "001",
       "course_id": 2,
       "dept_id": 4,
       "faculty_id": 2,
@@ -14,7 +14,7 @@
     "model": "app.session",
     "pk": 2,
     "fields": {
-      "session_name": "Wed Section",
+      "session_name": "101",
       "course_id": 2,
       "dept_id": 4,
       "faculty_id": 2,
@@ -25,7 +25,7 @@
     "model": "app.session",
     "pk": 3,
     "fields": {
-      "session_name": "Tues Section",
+      "session_name": "1123",
       "course_id": 1,
       "dept_id": 4,
       "faculty_id": 2,
@@ -36,7 +36,7 @@
     "model": "app.session",
     "pk": 4,
     "fields": {
-      "session_name": "Thr Section",
+      "session_name": "002",
       "course_id": 1,
       "dept_id": 4,
       "faculty_id": 2,
