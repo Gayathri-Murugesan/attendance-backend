@@ -19,5 +19,9 @@ from django.urls.conf import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+<<<<<<< Updated upstream:backend/urls.py
     path('accounts/', include('app.urls')),
+=======
+    path('api/', include('app1.urls')),
+>>>>>>> Stashed changes:project1/project1/urls.py
 ]

@@ -20,6 +20,7 @@ class department(models.Model):
     dept_id = models.AutoField(primary_key=True)
     dept_name = models.CharField(max_length=200)
     institution_name = models.CharField(max_length=200)
+    dept_short_name = models.CharField( max_length=200)
 
 class user_profile(models.Model):
     user = models.OneToOneField(User, on_delete=CASCADE)
