@@ -1,6 +1,6 @@
 [
   {
-    "model": "app.class_room",
+    "model": "app1.class_room",
     "pk": 1,
     "fields": {
       "room_name": "GITC 302",
@@ -9,7 +9,7 @@
     }
   },
   {
-    "model": "app.class_room",
+    "model": "app1.class_room",
     "pk": 2,
     "fields": {
       "room_name": "CKB 101",

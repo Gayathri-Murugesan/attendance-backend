@@ -1,46 +1,232 @@
-[
-  {
-    "model": "app.session",
-    "pk": 1,
-    "fields": {
-      "session_name": "001",
-      "course_id": 2,
-      "dept_id": 4,
-      "faculty_id": 2,
-      "room_id": 1
-    }
-  },
-  {
-    "model": "app.session",
-    "pk": 2,
-    "fields": {
-      "session_name": "101",
-      "course_id": 2,
-      "dept_id": 4,
-      "faculty_id": 2,
-      "room_id": 2
-    }
-  },
-  {
-    "model": "app.session",
-    "pk": 3,
-    "fields": {
-      "session_name": "1123",
-      "course_id": 1,
-      "dept_id": 4,
-      "faculty_id": 2,
-      "room_id": 1
-    }
-  },
-  {
-    "model": "app.session",
-    "pk": 4,
-    "fields": {
-      "session_name": "002",
-      "course_id": 1,
-      "dept_id": 4,
-      "faculty_id": 2,
-      "room_id": 2
-    }
+[ {
+  "model": "app1.session",
+  "pk": 1,
+  "fields": {
+    "session_name": "001",
+    "course_id": 1,
+    "dept_id": 4,
+    "faculty_id": 56,
+    "room_id": 1
   }
+},
+{
+  "model": "app1.session",
+  "pk": 2,
+  "fields": {
+    "session_name": "002",
+    "course_id": 1,
+    "dept_id": 4,
+    "faculty_id": 58,
+    "room_id": 2
+  }
+},
+{
+  "model": "app1.session",
+  "pk": 3,
+  "fields": {
+    "session_name": "003",
+    "course_id": 1,
+    "dept_id": 4,
+    "faculty_id": 60,
+    "room_id": 1
+  }
+},
+{
+  "model": "app1.session",
+  "pk": 4,
+  "fields": {
+    "session_name": "004",
+    "course_id": 2,
+    "dept_id": 4,
+    "faculty_id": 56,
+    "room_id": 2
+  }
+},
+{
+  "model": "app1.session",
+  "pk": 5,
+  "fields": {
+    "session_name": "005",
+    "course_id": 2,
+    "dept_id": 4,
+    "faculty_id": 58,
+    "room_id": 1
+  }
+},
+{
+  "model": "app1.session",
+  "pk": 6,
+  "fields": {
+    "session_name": "006",
+    "course_id": 2,
+    "dept_id": 4,
+    "faculty_id": 60,
+    "room_id": 2
+  }
+},
+{
+  "model": "app1.session",
+  "pk": 7,
+  "fields": {
+    "session_name": "001",
+    "course_id": 3,
+    "dept_id": 4,
+    "faculty_id": 56,
+    "room_id": 1
+  }
+},
+{
+  "model": "app1.session",
+  "pk": 8,
+  "fields": {
+    "session_name": "002",
+    "course_id": 3,
+    "dept_id": 4,
+    "faculty_id": 58,
+    "room_id": 2
+  }
+},
+{
+  "model": "app1.session",
+  "pk": 9,
+  "fields": {
+    "session_name": "003",
+    "course_id": 3,
+    "dept_id": 4,
+    "faculty_id": 60,
+    "room_id": 1
+  }
+},
+{
+  "model": "app1.session",
+  "pk": 10,
+  "fields": {
+    "session_name": "001",
+    "course_id": 5,
+    "dept_id": 3,
+    "faculty_id": 57,
+    "room_id": 2
+  }
+},
+{
+  "model": "app1.session",
+  "pk": 11,
+  "fields": {
+    "session_name": "002",
+    "course_id": 5,
+    "dept_id": 3,
+    "faculty_id": 59,
+    "room_id": 1
+  }
+},
+{
+  "model": "app1.session",
+  "pk": 12,
+  "fields": {
+    "session_name": "003",
+    "course_id": 5,
+    "dept_id": 3,
+    "faculty_id": 61,
+    "room_id": 2
+  }
+},
+{
+  "model": "app1.session",
+  "pk": 13,
+  "fields": {
+    "session_name": "002",
+    "course_id": 6,
+    "dept_id": 3,
+    "faculty_id": 57,
+    "room_id": 1
+  }
+},
+{
+  "model": "app1.session",
+  "pk": 14,
+  "fields": {
+    "session_name": "003",
+    "course_id": 6,
+    "dept_id": 3,
+    "faculty_id": 59,
+    "room_id": 2
+  }
+},
+{
+  "model": "app1.session",
+  "pk": 15,
+  "fields": {
+    "session_name": "004",
+    "course_id": 6,
+    "dept_id": 3,
+    "faculty_id": 61,
+    "room_id": 1
+  }
+},
+{
+  "model": "app1.session",
+  "pk": 16,
+  "fields": {
+    "session_name": "004",
+    "course_id": 7,
+    "dept_id": 3,
+    "faculty_id": 57,
+    "room_id": 2
+  }
+},
+{
+  "model": "app1.session",
+  "pk": 17,
+  "fields": {
+    "session_name": "005",
+    "course_id": 7,
+    "dept_id": 3,
+    "faculty_id": 59,
+    "room_id": 1
+  }
+},
+{
+  "model": "app1.session",
+  "pk": 18,
+  "fields": {
+    "session_name": "007",
+    "course_id": 7,
+    "dept_id": 3,
+    "faculty_id": 61,
+    "room_id": 2
+  }
+},
+{
+  "model": "app1.session",
+  "pk": 19,
+  "fields": {
+    "session_name": "003",
+    "course_id": 8,
+    "dept_id": 3,
+    "faculty_id": 57,
+    "room_id": 1
+  }
+},
+{
+  "model": "app1.session",
+  "pk": 20,
+  "fields": {
+    "session_name": "004",
+    "course_id": 8,
+    "dept_id": 3,
+    "faculty_id": 59,
+    "room_id": 2
+  }
+},
+{
+  "model": "app1.session",
+  "pk": 21,
+  "fields": {
+    "session_name": "005",
+    "course_id": 8,
+    "dept_id": 3,
+    "faculty_id": 61,
+    "room_id": 1
+  }
+}
 ]
