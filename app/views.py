@@ -227,7 +227,7 @@ def get_attendance(request, session_id, course_id):
     return_json['attendance_data'] = []
     index = 0
     attended = 0
-    attendance_obj = attendance.objects.filter(user_id=userid)
+    attendance_obj = attendance.objects.filter(user_id=userid, course_id_id = course_id, session_id_id = session_id)
     print("11111111")
     for _i in attendance_obj:
         if _i.attendance == True:
@@ -239,7 +239,7 @@ def get_attendance(request, session_id, course_id):
         month = _i.date.month
         day = _i.date.day
         obj = {"date": str(month)+"/"+str(day)+"/"+str(year),
-               "type": 'attended' if _i.attendance else 'Not attended'}
+               "type": 'attended' if _i.attendance else 'absent'}
         print("obj = ", obj)
         return_json['attendance_data'].append(obj)
         index += 1
@@ -251,7 +251,7 @@ def get_attendance(request, session_id, course_id):
     return JsonResponse(return_json, status=200, content_type="application/json", safe=False)
 
 
-def get_faculty_attendance(request, session_id, course_id):
+def get_session_attendance(request, session_id, course_id):
     print("in faculty attendance")
     print("course id = ", course_id)
     print("session id = ", session_id)
@@ -270,6 +270,47 @@ def get_faculty_attendance(request, session_id, course_id):
         return JsonResponse(return_json, status=200, content_type="application/json", safe=False)
     else:
         return JsonResponse({'msg': 'Not a valid user'},content_type="application/json", safe=False)
+
+@csrf_exempt
+def student_attendance(request, session_id, course_id, date_inp):
+    if request.method == "GET":
+        print("in faculty attendance")
+        print("course id = ", course_id)
+        print("session id = ", session_id)
+        token = get_authorization_header(request).split()[1]
+        payload = jwt.decode(token, "SECRET_KEY", "HS256")
+        userid = payload['id']
+        if User.objects.get(pk = userid).is_staff == True:
+            attendance_obj = attendance.objects.filter(date=date_inp, course_id_id = course_id, session_id_id = session_id)
+            return_json = []
+            for _i in attendance_obj:
+                obj = {'id': _i.user_id_id, "name": str(User.objects.get(pk = _i.user_id_id).get_full_name()), 'type': 'attended' if _i.attendance else 'absent'}
+                return_json.append(obj)
+            
+            return JsonResponse(return_json, status=200, content_type="application/json", safe=False)
+        else:
+            return JsonResponse({'msg': 'Not a valid user'},content_type="application/json", safe=False)
+    elif request.method == "PUT":
+        print("In put ")
+        token = get_authorization_header(request).split()[1]
+        print("token = ", token)
+        payload = jwt.decode(token, "SECRET_KEY", "HS256")
+        faculty_id = payload['id']
+        if User.objects.get(pk = faculty_id).is_staff == True:
+            request = json.loads(request.body)
+            student_id = int(request['id'])
+            attendance_obj = attendance.objects.get(user_id_id = student_id, date = date_inp, course_id_id = course_id, session_id_id = session_id)
+            print (attendance_obj)
+            print ("attendance data", attendance_obj.attendance)
+            if attendance_obj.attendance == True:
+                attendance.objects.filter(id = attendance_obj.id).update(attendance = False, marked_by = "faculty")
+            else:
+                attendance.objects.filter(id = attendance_obj.id).update(attendance = True, marked_by = "faculty")
+            return JsonResponse({"msg": "Success Attendance is Updated"}, status=200, content_type="application/json", safe=False)
+        else:
+            return JsonResponse({'msg': 'Not a valid user'},content_type="application/json", safe=False)
+
+
 
 
 """
