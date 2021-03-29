@@ -302,13 +302,36 @@ def student_attendance(request, session_id, course_id, date_inp):
             attendance_obj = attendance.objects.get(user_id_id = student_id, date = date_inp, course_id_id = course_id, session_id_id = session_id)
             print (attendance_obj)
             print ("attendance data", attendance_obj.attendance)
-            if attendance_obj.attendance == True:
+            if attendance_obj.attendance is None:
+                attendance.objects.filter(id = attendance_obj.id).update(attendance = True, marked_by = "faculty")
+            elif attendance_obj.attendance == True:
                 attendance.objects.filter(id = attendance_obj.id).update(attendance = False, marked_by = "faculty")
-            else:
+            elif attendance_obj.attendance == False:
                 attendance.objects.filter(id = attendance_obj.id).update(attendance = True, marked_by = "faculty")
             return JsonResponse({"msg": "Success Attendance is Updated"}, status=200, content_type="application/json", safe=False)
         else:
             return JsonResponse({'msg': 'Not a valid user'},content_type="application/json", safe=False)
+    
+    elif request.method == "POST":
+        print("in faculty attendance")
+        print("course id = ", course_id)
+        print("session id = ", session_id)
+        token = get_authorization_header(request).split()[1]
+        payload = jwt.decode(token, "SECRET_KEY", "HS256")
+        userid = payload['id']
+        if User.objects.get(pk = userid).is_staff == True:
+            return_json = []
+            attendance_list = []
+            course_enrolled_obj = course_enrolled.objects.filter(course_id_id = course_id, session_id_id = session_id)
+            print ("course_enrolled = ", course_enrolled_obj)
+            for _i in course_enrolled_obj:
+                user_id = _i.student_id_id
+                dept_id = _i.dept_id_id
+                obj = {'id': user_id, 'name': str(User.objects.get(pk = _i.student_id_id).get_full_name()), 'type': 'default'}
+                attendance_list.append(attendance.objects.create(course_id_id = course_id, dept_id_id = dept_id, session_id_id = session_id, user_id_id = user_id, marked_by = 'faculty', date = date_inp))
+                return_json.append(obj)
+            attendance.objects.bulk_update(attendance_list, ['course_id_id', 'session_id_id', 'dept_id_id', 'user_id_id', 'marked_by', 'date'])
+            return JsonResponse(return_json, status=200, content_type="application/json", safe=False)
 
 
 
