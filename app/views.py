@@ -142,7 +142,7 @@ def profile(request):
         except:
             return HttpResponse({'Error': "Data can't be fetched, Internal server error"}, status="500")
         return_josn = {"first_name": user_obj.first_name, "last_name": user_obj.last_name, "email": user_obj.email,
-                       "dept_name": d_name, "phone_no": str(profile_obj.phone_no), "address": profile_obj.address}
+                       "dept_name": d_name, "phone_no": str(profile_obj.phone_no), "address": profile_obj.address, "is_staff": user_obj.is_staff}
         print("return json = ", return_josn)
         return JsonResponse(return_josn, status=200, content_type="application/json", safe=False)
     elif request.method == 'PUT':
@@ -284,7 +284,13 @@ def student_attendance(request, session_id, course_id, date_inp):
             attendance_obj = attendance.objects.filter(date=date_inp, course_id_id = course_id, session_id_id = session_id)
             return_json = []
             for _i in attendance_obj:
-                obj = {'id': _i.user_id_id, "name": str(User.objects.get(pk = _i.user_id_id).get_full_name()), 'type': 'attended' if _i.attendance else 'absent'}
+                if _i.attendance is None:
+                    t = 'default'
+                elif _i.attendance == True:
+                    t = 'attended'
+                elif _i.attendance == False:
+                    t = 'absent'
+                obj = {'id': _i.user_id_id, "name": str(User.objects.get(pk = _i.user_id_id).get_full_name()), 'type': t}
                 return_json.append(obj)
             
             return JsonResponse(return_json, status=200, content_type="application/json", safe=False)
@@ -320,18 +326,17 @@ def student_attendance(request, session_id, course_id, date_inp):
         payload = jwt.decode(token, "SECRET_KEY", "HS256")
         userid = payload['id']
         if User.objects.get(pk = userid).is_staff == True:
-            return_json = []
             attendance_list = []
             course_enrolled_obj = course_enrolled.objects.filter(course_id_id = course_id, session_id_id = session_id)
             print ("course_enrolled = ", course_enrolled_obj)
             for _i in course_enrolled_obj:
                 user_id = _i.student_id_id
                 dept_id = _i.dept_id_id
-                obj = {'id': user_id, 'name': str(User.objects.get(pk = _i.student_id_id).get_full_name()), 'type': 'default'}
                 attendance_list.append(attendance.objects.create(course_id_id = course_id, dept_id_id = dept_id, session_id_id = session_id, user_id_id = user_id, marked_by = 'faculty', date = date_inp))
-                return_json.append(obj)
             attendance.objects.bulk_update(attendance_list, ['course_id_id', 'session_id_id', 'dept_id_id', 'user_id_id', 'marked_by', 'date'])
-            return JsonResponse(return_json, status=200, content_type="application/json", safe=False)
+            return JsonResponse({"msg": "Success"}, status=200, content_type="application/json", safe=False)
+        else:
+            return JsonResponse({'msg': 'Not a valid user'},content_type="application/json", safe=False)
 
 
 
